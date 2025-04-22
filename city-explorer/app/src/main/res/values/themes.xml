@@ -17,10 +17,4 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="Theme.CityExplorer.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
-        <item name="android:windowBackground">@drawable/splash_screen_bg</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowDisablePreview">true</item>
-    </style>
 </resources>
