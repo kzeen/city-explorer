@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">City Explorer</string>
     <string name="logo_description">App logo</string>
+    <string name="home">Home</string>
+    <string name="places">Places</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
 </resources>
