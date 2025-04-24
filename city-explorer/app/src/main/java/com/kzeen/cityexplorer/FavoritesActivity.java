@@ -7,21 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Arrays;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity {
+public class FavoritesActivity extends BaseActivity {
 
-    @Override protected int getNavItemId() { return R.id.nav_home; }
-    @Override protected int getToolbarTitleRes() { return R.string.home; }
+    @Override protected int getNavItemId() { return R.id.nav_favorites; }
+    @Override protected int getToolbarTitleRes() { return R.string.favorites; }
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inflateLayout(R.layout.activity_home);   // see XML below
+        inflateLayout(R.layout.activity_favorites);   // see XML below
 
-        RecyclerView rv = findViewById(R.id.home_recycler);
+        RecyclerView rv = findViewById(R.id.favorites_recycler);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new SimpleStringAdapter(mockData()));
     }
 
     private List<String> mockData() {
-        return Arrays.asList("Home 1", "Item 2", "Item 3");
+        return Arrays.asList("Fav 1", "Item 2", "Item 3");
     }
 }
