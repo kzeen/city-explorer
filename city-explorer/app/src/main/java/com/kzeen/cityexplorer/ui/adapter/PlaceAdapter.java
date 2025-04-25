@@ -2,6 +2,7 @@ package com.kzeen.cityexplorer.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.content.Intent;
 
 import com.bumptech.glide.Glide;
 import com.kzeen.cityexplorer.R;
@@ -12,6 +13,8 @@ import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
+import com.kzeen.cityexplorer.ui.detail.PlaceDetailActivity;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +44,13 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         Place p = data.get(pos);
         h.binding.rowTitle.setText(p.getName());
         h.binding.rowSubtitle.setText(p.getAddress());
+
+        // Open detail page on tap
+        h.itemView.setOnClickListener(v -> {
+            Intent i = new Intent(v.getContext(), PlaceDetailActivity.class);
+            i.putExtra(PlaceDetailActivity.EXTRA_PLACE_ID, p.getId());
+            v.getContext().startActivity(i);
+        });
 
         // Load photo if available
         List<PhotoMetadata> meta = p.getPhotoMetadatas();
