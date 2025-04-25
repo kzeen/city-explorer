@@ -12,6 +12,7 @@ gson         = "2.11.0"
 nav          = "2.8.9"
 maps         = "19.2.0"
 places       = "4.2.0"
+glide = "4.16.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -27,6 +28,7 @@ nav-fragment   = { module = "androidx.navigation:navigation-fragment",     versi
 nav-ui         = { module = "androidx.navigation:navigation-ui",           version.ref = "nav" }
 maps           = { module = "com.google.android.gms:play-services-maps",  version.ref = "maps" }
 places         = { module = "com.google.android.libraries.places:places", version.ref = "places" }
+glide          = { module = "com.github.bumptech.glide:glide",              version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

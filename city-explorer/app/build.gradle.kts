@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.nav.fragment)
     implementation(libs.nav.ui)
 
+    implementation(libs.glide)
+    annotationProcessor(libs.glide)
+
     implementation(libs.maps)
     implementation(libs.places)
 }
