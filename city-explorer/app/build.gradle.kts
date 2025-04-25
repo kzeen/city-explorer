@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide)
 
+    implementation(libs.swiperefreshlayout)
+
     implementation(libs.maps)
     implementation(libs.places)
 }

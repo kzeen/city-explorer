@@ -2,8 +2,11 @@ package com.kzeen.cityexplorer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,5 +63,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void inflateLayout(@LayoutRes int layoutResId) {
         getLayoutInflater()
                 .inflate(layoutResId, findViewById(R.id.content_container), true);
+    }
+
+    protected void inflateLayout(@NonNull View view) {
+        FrameLayout container = findViewById(R.id.content_container);
+        container.addView(view);
     }
 }

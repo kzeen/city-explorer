@@ -13,6 +13,7 @@ nav          = "2.8.9"
 maps         = "19.2.0"
 places       = "4.2.0"
 glide = "4.16.0"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,6 +30,7 @@ nav-ui         = { module = "androidx.navigation:navigation-ui",           versi
 maps           = { module = "com.google.android.gms:play-services-maps",  version.ref = "maps" }
 places         = { module = "com.google.android.libraries.places:places", version.ref = "places" }
 glide          = { module = "com.github.bumptech.glide:glide",              version.ref = "glide" }
+swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
