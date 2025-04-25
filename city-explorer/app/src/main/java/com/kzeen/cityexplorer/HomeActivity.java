@@ -34,6 +34,13 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity {
 
+    private static final String[] CITIES = {
+        "Paris", "Tokyo", "New York", "Rio de Janeiro", "Sydney",
+        "Cape Town", "Rome", "Barcelona", "Singapore", "Dubai",
+        "Istanbul", "Toronto", "Amsterdam", "Bangkok", "Berlin",
+        "Los Angeles", "Athens", "Prague", "Seoul", "Buenos Aires"
+    };
+
     @Override protected int getNavItemId() { return R.id.nav_home; }
     @Override protected int getToolbarTitleRes() { return R.string.home; }
 
@@ -94,22 +101,27 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-    @SuppressLint("MissingPermission")
     private void loadPlaces() {
         swipe.setRefreshing(true);
+        places.clear();
 
         List<Place.Field> fields = Arrays.asList(
                 Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS,
-                Place.Field.LAT_LNG, Place.Field.PHOTO_METADATAS
+                Place.Field.PHOTO_METADATAS, Place.Field.LAT_LNG
         );
+
+        String randomCity = CITIES[(int) (Math.random() * CITIES.length)];
         FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(fields);
+
+        @SuppressLint("MissingPermission")
         Task<FindCurrentPlaceResponse> task = placesClient.findCurrentPlace(request);
 
-        task.addOnSuccessListener(response -> {
-            places.clear();
-            for (PlaceLikelihood pl : response.getPlaceLikelihoods()) {
-                places.add(pl.getPlace());
+        task.addOnSuccessListener(r -> {
+            for (PlaceLikelihood pl : r.getPlaceLikelihoods()) {
+                if (pl.getPlace().getAddress() != null)
+                    places.add(pl.getPlace());
             }
+            if (places.size() > 20) places.subList(20, places.size()).clear();
             adapter.notifyDataSetChanged();
             swipe.setRefreshing(false);
         }).addOnFailureListener(e -> {
