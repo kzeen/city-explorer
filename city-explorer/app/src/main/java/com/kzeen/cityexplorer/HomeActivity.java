@@ -1,5 +1,7 @@
 package com.kzeen.cityexplorer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -10,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.kzeen.cityexplorer.databinding.ActivityHomeBinding;
 import com.kzeen.cityexplorer.model.Place;
@@ -31,21 +34,42 @@ public class HomeActivity extends BaseActivity {
     private final List<Place> places = new ArrayList<>();
     private PlaceAdapter adapter;
     private SwipeRefreshLayout swipe;
+    private ActivityHomeBinding binding;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         inflateLayout(binding.getRoot());
 
-        swipe = binding.swipe;
+        List<String> categories = Arrays.asList("All", "Food", "Parks", "Shopping");
+        for (String c : categories) {
+            Chip chip = new Chip(this);
+            chip.setText(c);
+            binding.chipGroup.addView(chip);
+        }
+        binding.chipGroup.setOnCheckedStateChangeListener(
+                (group, ids) -> filter(group.getCheckedChipId())
+        );
+
         RecyclerView rv = binding.homeRecycler;
-        rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PlaceAdapter(places);
+        rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
+        swipe = binding.swipe;
         swipe.setOnRefreshListener(this::loadPlaces);
+
+        binding.fabMap.setOnClickListener(
+                v -> startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=Lebanon")))
+        );
+
         loadPlaces();
+    }
+
+    private void filter(int checkedId) {
+
     }
 
     private void loadPlaces() {
