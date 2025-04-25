@@ -6,7 +6,12 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.RowPlaceBinding;
-import com.kzeen.cityexplorer.model.Place;
+
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,14 +39,25 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
 
     @Override public void onBindViewHolder(@NonNull ViewHolder h, int pos) {
         Place p = data.get(pos);
-        h.binding.rowTitle.setText(p.name);
-        h.binding.rowSubtitle.setText(p.description);
+        h.binding.rowTitle.setText(p.getName());
+        h.binding.rowSubtitle.setText(p.getAddress());
 
-        Glide.with(h.itemView)
-                .load(p.imageURL)
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_error)
-                .into(h.binding.rowThumbnail);
+        // Load photo if available
+        List<PhotoMetadata> meta = p.getPhotoMetadatas();
+        if (meta != null && !meta.isEmpty()) {
+            FetchPhotoRequest req = FetchPhotoRequest.builder(meta.get(0)).build();
+            PlacesClient pc = Places.createClient(h.itemView.getContext());
+            pc.fetchPhoto(req).addOnSuccessListener(r ->
+                    Glide.with(h.itemView)
+                            .load(r.getBitmap())
+                            .placeholder(R.drawable.ic_placeholder)
+                            .error(R.drawable.ic_error)
+                            .into(h.binding.rowThumbnail));
+        } else {
+            Glide.with(h.itemView)
+                    .load(R.drawable.ic_placeholder)
+                    .into(h.binding.rowThumbnail);
+        }
     }
 
     @Override public int getItemCount() { return data.size(); }

@@ -49,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else {
                 throw new IllegalArgumentException("Unknown navigation item");
             }
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             // Cancels weird default animation
             overridePendingTransition(0, 0);

@@ -59,4 +59,5 @@ dependencies {
 
     implementation(libs.maps)
     implementation(libs.places)
+    implementation(libs.location)
 }
