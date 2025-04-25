@@ -41,7 +41,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void loadPlaces() {
-        String url = "http://192.168.0.106/mock-android.json";
+        String url = "http://192.168.0.109/mock-android.json";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     parseJson(response);
