@@ -82,7 +82,7 @@ public class HomeActivity extends BaseActivity {
         );
 
         RecyclerView rv = binding.rvPlaces;
-        adapter = new PlaceAdapter(places);
+        adapter = new PlaceAdapter(places, placesClient);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 

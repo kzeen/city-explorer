@@ -106,7 +106,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void setupResultsList() {
-        adapter = new PlaceAdapter(results);
+        adapter = new PlaceAdapter(results, placesClient);
         binding.searchRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.searchRecycler.setAdapter(adapter);
     }

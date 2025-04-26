@@ -26,6 +26,7 @@ import com.kzeen.cityexplorer.databinding.ActivityPlaceDetailBinding;
 import java.util.ArrayList;
 import java.util.List;
 import com.kzeen.cityexplorer.util.ShareUtils;
+import com.kzeen.cityexplorer.util.RecentsManager;
 
 public class PlaceDetailActivity extends AppCompatActivity {
 
@@ -56,6 +57,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
         binding.viewPagerPhotos.setAdapter(imageAdapter);
 
         String placeId = getIntent().getStringExtra(EXTRA_PLACE_ID);
+        if (placeId != null) {
+            RecentsManager.addRecent(this, placeId);
+        }
 
         viewModel = new ViewModelProvider(this).get(PlaceDetailViewModel.class);
 

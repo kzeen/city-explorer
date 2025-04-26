@@ -1,4 +1,3 @@
-
 package com.kzeen.cityexplorer.ui.detail;
 
 import android.view.LayoutInflater;
@@ -46,9 +45,10 @@ public class DetailImagePagerAdapter
                 .build();
 
         placesClient.fetchPhoto(req)
-                .addOnSuccessListener(response -> Glide.with(holder.imageView.getContext())
+                .addOnSuccessListener(response -> Glide.with(holder.itemView.getContext())
                         .load(response.getBitmap())
                         .placeholder(R.drawable.ic_placeholder)
+                        .error(R.drawable.ic_error)
                         .into(holder.imageView))
                 .addOnFailureListener(e -> holder.imageView
                         .setImageResource(R.drawable.ic_placeholder));

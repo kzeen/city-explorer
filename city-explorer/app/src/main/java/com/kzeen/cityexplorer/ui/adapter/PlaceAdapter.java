@@ -23,7 +23,11 @@ import java.util.List;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
     private final List<Place> data;
-    public PlaceAdapter(List<Place> data) { this.data = data; }
+    private final PlacesClient placesClient;
+    public PlaceAdapter(List<Place> data, PlacesClient client) {
+        this.data = data;
+        this.placesClient = client;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final RowPlaceBinding binding;
@@ -54,15 +58,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         List<PhotoMetadata> meta = p.getPhotoMetadatas();
         if (meta != null && !meta.isEmpty()) {
             FetchPhotoRequest req = FetchPhotoRequest.builder(meta.get(0)).build();
-            PlacesClient pc = Places.createClient(h.itemView.getContext());
-            pc.fetchPhoto(req).addOnSuccessListener(r ->
-                    Glide.with(h.itemView)
+            placesClient.fetchPhoto(req).addOnSuccessListener(r ->
+                    Glide.with(h.itemView.getContext().getApplicationContext())
                             .load(r.getBitmap())
                             .placeholder(R.drawable.ic_placeholder)
                             .error(R.drawable.ic_error)
                             .into(h.binding.rowThumbnail));
         } else {
-            Glide.with(h.itemView)
+            Glide.with(h.itemView.getContext().getApplicationContext())
                     .load(R.drawable.ic_placeholder)
                     .into(h.binding.rowThumbnail);
         }

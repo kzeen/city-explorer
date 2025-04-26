@@ -48,9 +48,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else {
                 throw new IllegalArgumentException("Unknown navigation item");
             }
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             overridePendingTransition(0, 0);
+            finish();
             return true;
         });
 
@@ -65,5 +66,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void inflateLayout(@NonNull View view) {
         FrameLayout container = findViewById(R.id.content_container);
         container.addView(view);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView nav = findViewById(R.id.bottom_nav);
+        // Update the checked state in case this Activity was reordered to front
+        nav.getMenu().findItem(getNavItemId()).setChecked(true);
     }
 }
