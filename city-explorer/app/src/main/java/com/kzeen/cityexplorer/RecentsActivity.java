@@ -21,21 +21,13 @@ public class RecentsActivity extends BaseActivity {
 
     @Override protected int getNavItemId()     { return R.id.nav_recents; }
     @Override protected int getToolbarTitleRes(){ return R.string.recents; }
-
-    private ActivityRecentsBinding binding;
     private final List<Place> recents = new ArrayList<>();
     private PlaceAdapter adapter;
-    private PlacesClient placesClient;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRecentsBinding.inflate(getLayoutInflater());
+        ActivityRecentsBinding binding = ActivityRecentsBinding.inflate(getLayoutInflater());
         inflateLayout(binding.getRoot());
-
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
-        }
-        placesClient = Places.createClient(this);
 
         adapter = new PlaceAdapter(recents, placesClient);
         binding.recentsRecycler.setLayoutManager(new LinearLayoutManager(this));

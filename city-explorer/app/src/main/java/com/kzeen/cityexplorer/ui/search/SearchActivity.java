@@ -33,7 +33,6 @@ import java.util.List;
 public class SearchActivity extends BaseActivity {
 
     private ActivitySearchBinding binding;
-    private PlacesClient placesClient;
     private ArrayAdapter<String> suggestionAdapter;
     private final List<Place> results = new ArrayList<>();
     private PlaceAdapter adapter;
@@ -48,10 +47,6 @@ public class SearchActivity extends BaseActivity {
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         inflateLayout(binding.getRoot());
 
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),  BuildConfig.MAPS_API_KEY);
-        }
-        placesClient = Places.createClient(this);
         sessionToken = AutocompleteSessionToken.newInstance();
 
         setupAutocomplete();

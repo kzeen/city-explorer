@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kzeen.cityexplorer.ui.search.SearchActivity;
@@ -17,6 +19,7 @@ import com.kzeen.cityexplorer.ui.search.SearchActivity;
 import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    protected PlacesClient placesClient;
     protected abstract int getNavItemId();
 
     protected @StringRes int getToolbarTitleRes() {
@@ -27,6 +30,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(),  BuildConfig.MAPS_API_KEY);
+        }
+        placesClient = Places.createClient(this);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -70,7 +78,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
-        // Update the checked state in case this Activity was reordered to front
         nav.getMenu().findItem(getNavItemId()).setChecked(true);
     }
 }

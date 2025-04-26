@@ -35,7 +35,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
     private ActivityPlaceDetailBinding binding;
     private PlacesClient placesClient;
     private DetailImagePagerAdapter imageAdapter;
-    private PlaceDetailViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
             RecentsManager.addRecent(this, placeId);
         }
 
-        viewModel = new ViewModelProvider(this).get(PlaceDetailViewModel.class);
+        PlaceDetailViewModel viewModel = new ViewModelProvider(this).get(PlaceDetailViewModel.class);
 
         viewModel.getPlace().observe(this, this::bindPlace);
         viewModel.getError().observe(this, Throwable::printStackTrace);

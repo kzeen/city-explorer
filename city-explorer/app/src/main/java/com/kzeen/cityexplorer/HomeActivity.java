@@ -47,27 +47,19 @@ public class HomeActivity extends BaseActivity {
     private final List<Place> places = new ArrayList<>();
     private PlaceAdapter adapter;
     private SwipeRefreshLayout swipe;
-    private PlacesClient placesClient;
-    private FusedLocationProviderClient fusedClient;
-    private ActivityResultLauncher<String> permLauncher;
-    private ActivityHomeBinding binding;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        com.kzeen.cityexplorer.databinding.ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         inflateLayout(binding.getRoot());
 
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
-        }
-        placesClient = Places.createClient(this);
-        fusedClient  = LocationServices.getFusedLocationProviderClient(this);
-        permLauncher = registerForActivityResult(
+        ActivityResultLauncher<String> permLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 granted -> {
                     if (granted) loadPlaces();
-                    else Toast.makeText(this, "Location permission denied", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(this, "Location permission denied", Toast.LENGTH_LONG).show();
                 });
 
 
