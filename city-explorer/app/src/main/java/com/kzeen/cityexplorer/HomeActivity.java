@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
@@ -24,46 +28,64 @@ import com.google.android.material.snackbar.Snackbar;
 import com.kzeen.cityexplorer.databinding.ActivityHomeBinding;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.Place.Type;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.kzeen.cityexplorer.model.NearbyPlace;
+import com.kzeen.cityexplorer.network.VolleySingleton;
+import com.kzeen.cityexplorer.ui.adapter.NearbyPlaceAdapter;
 import com.kzeen.cityexplorer.ui.adapter.PlaceAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {
-
-    private static final String[] CITIES = {
-        "Paris", "Tokyo", "New York", "Rio de Janeiro", "Sydney",
-        "Cape Town", "Rome", "Barcelona", "Singapore", "Dubai",
-        "Istanbul", "Toronto", "Amsterdam", "Bangkok", "Berlin",
-        "Los Angeles", "Athens", "Prague", "Seoul", "Buenos Aires"
-    };
-
     @Override protected int getNavItemId() { return R.id.nav_home; }
     @Override protected int getToolbarTitleRes() { return R.string.home; }
 
     private final List<Place> places = new ArrayList<>();
-    private final List<Place> allPlaces = new ArrayList<>();
+    private final List<NearbyPlace> nearbyPlaces = new ArrayList<>();
 
     private PlaceAdapter adapter;
+    private NearbyPlaceAdapter httpAdapter;
     private SwipeRefreshLayout swipe;
+    private ActivityHomeBinding binding;
+    private FusedLocationProviderClient fusedClient;
+    private double lastLat, lastLng;
 
+
+    @SuppressLint("MissingPermission")
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        com.kzeen.cityexplorer.databinding.ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         inflateLayout(binding.getRoot());
+
+        fusedClient = LocationServices.getFusedLocationProviderClient(this);
 
         ActivityResultLauncher<String> permLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 granted -> {
-                    if (granted) loadPlaces();
-                    else
+                    if (granted) {
+                        fusedClient.getLastLocation()
+                                .addOnSuccessListener(this, location -> {
+                                    if (location != null) {
+                                        lastLat = location.getLatitude();
+                                        lastLng = location.getLongitude();
+                                    }
+                                    loadPlaces();
+                                });
+                    } else
                         Toast.makeText(this, "Location permission denied", Toast.LENGTH_LONG).show();
                 });
 
 
         List<String> categories = Arrays.asList("All", "Food", "Parks", "Shopping", "Parking");
+        binding.chipGroup.setSingleSelection(true);
         for (String c : categories) {
             Chip chip = new Chip(this);
             chip.setCheckable(true);
@@ -71,19 +93,29 @@ public class HomeActivity extends BaseActivity {
             chip.setText(c);
             binding.chipGroup.addView(chip);
         }
-        binding.chipGroup.setOnCheckedStateChangeListener((group, ids) -> filter(group.getCheckedChipId()));
 
-        RecyclerView rv = binding.rvPlaces;
+        binding.chipGroup.setOnCheckedStateChangeListener(
+                (group, ids) -> loadPlaces()
+        );
+
         adapter = new PlaceAdapter(places, placesClient);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(adapter);
+        httpAdapter = new NearbyPlaceAdapter(nearbyPlaces);
+        binding.rvPlaces.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvPlaces.setAdapter(adapter);
 
         swipe = binding.swipe;
         swipe.setOnRefreshListener(this::loadPlaces);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            loadPlaces();
+            fusedClient.getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            lastLat = location.getLatitude();
+                            lastLng = location.getLongitude();
+                        }
+                        loadPlaces();
+                    });
         } else {
             permLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -91,66 +123,103 @@ public class HomeActivity extends BaseActivity {
 
     private void loadPlaces() {
         swipe.setRefreshing(true);
-        places.clear();
 
-        List<Place.Field> fields = Arrays.asList(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.PHOTO_METADATAS,
-                Place.Field.LAT_LNG,
-                Place.Field.TYPES
-        );
+        int checkedId = binding.chipGroup.getCheckedChipId();
+        String category = "All";
+        if (checkedId != View.NO_ID) {
+            category = ((Chip)binding.chipGroup.findViewById(checkedId)).getText().toString();
+        }
 
-        String randomCity = CITIES[(int) (Math.random() * CITIES.length)];
-        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(fields);
-
-        @SuppressLint("MissingPermission")
-        Task<FindCurrentPlaceResponse> task = placesClient.findCurrentPlace(request);
-
-        task.addOnSuccessListener(r -> {
-            for (PlaceLikelihood pl : r.getPlaceLikelihoods()) {
-                if (pl.getPlace().getAddress() != null)
-                    places.add(pl.getPlace());
-            }
-            if (places.size() > 50) places.subList(50, places.size()).clear();
-            allPlaces.clear();
-            allPlaces.addAll(places);
-            adapter.notifyDataSetChanged();
-            swipe.setRefreshing(false);
-        }).addOnFailureListener(e -> {
-            swipe.setRefreshing(false);
-            Snackbar.make(swipe, "Load failed: " + e.getMessage(), Snackbar.LENGTH_LONG)
-                    .setAction("RETRY", v -> loadPlaces())
-                    .show();
-            Log.e("Places", "findCurrentPlace error", e);
-        });
-    }
-
-    private void filter(int checkedId) {
-        Chip chip = findViewById(checkedId);
-        String category = chip.getText().toString();
-
-        places.clear();
         if ("All".equals(category)) {
-            places.addAll(allPlaces);
-        } else {
-            Type wantedType = null;
-            switch (category) {
-                case "Food": wantedType = Type.FOOD; break;
-                case "Parks": wantedType = Type.PARK; break;
-                case "Shopping": wantedType = Type.SHOPPING_MALL; break;
-                case "Parking": wantedType = Type.PARKING; break;
-            }
-            if (wantedType != null) {
-                for (Place p : allPlaces) {
-                    List<Type> types = p.getTypes();
-                    if (types != null && types.contains(wantedType)) {
-                        places.add(p);
+            places.clear();
+            adapter.notifyDataSetChanged();
+            List<Place.Field> fields = Arrays.asList(
+                    Place.Field.ID,
+                    Place.Field.NAME,
+                    Place.Field.ADDRESS,
+                    Place.Field.PHOTO_METADATAS,
+                    Place.Field.LAT_LNG
+            );
+            FindCurrentPlaceRequest req = FindCurrentPlaceRequest.newInstance(fields);
+            @SuppressLint("MissingPermission")
+            Task<FindCurrentPlaceResponse> task = placesClient.findCurrentPlace(req);
+            task.addOnSuccessListener(r -> {
+                for (PlaceLikelihood pl : r.getPlaceLikelihoods()) {
+                    Place sdkPlace = pl.getPlace();
+                    if (sdkPlace.getAddress() != null) {
+                        places.add(pl.getPlace());
                     }
                 }
-            }
+                if (places.size() > 50)
+                    places.subList(50, places.size()).clear();
+                adapter.notifyDataSetChanged();
+                swipe.setRefreshing(false);
+            }).addOnFailureListener(e -> {
+                swipe.setRefreshing(false);
+                Snackbar.make(swipe, "Load failed: " + e.getMessage(),
+                                Snackbar.LENGTH_LONG)
+                        .setAction("RETRY", v -> loadPlaces())
+                        .show();
+                Log.e("Places", "findCurrentPlace error", e);
+            });
+
+            binding.rvPlaces.setAdapter(adapter);
+        } else {
+            nearbyPlaces.clear();
+            httpAdapter.notifyDataSetChanged();
+            binding.rvPlaces.setAdapter(httpAdapter);
+            fetchNearbyByType(category);
         }
-        adapter.notifyDataSetChanged();
+    }
+
+    private void fetchNearbyByType(String category) {
+        String typeParam = "";
+        switch (category) {
+            case "Food":     typeParam = "restaurant";    break;
+            case "Parks":    typeParam = "park";          break;
+            case "Shopping": typeParam = "shopping_mall"; break;
+            case "Parking":  typeParam = "parking";       break;
+        }
+        String url = String.format(Locale.US,
+                "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                        "location=%f,%f&radius=1500&type=%s&key=%s",
+                lastLat, lastLng, typeParam,
+                BuildConfig.MAPS_API_KEY);
+
+        JsonObjectRequest req = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                this::parseNearbyJson,
+                error -> {
+                    swipe.setRefreshing(false);
+                    Snackbar.make(swipe, "Nearby search failed: " + error.getMessage(),
+                                    Snackbar.LENGTH_LONG)
+                            .setAction("RETRY", v -> loadPlaces())
+                            .show();
+                    Log.e("Places", "NearbySearch error", error);
+                });
+        VolleySingleton.getInstance(this).addToRequestQueue(req);
+    }
+    private void parseNearbyJson(JSONObject json) {
+        nearbyPlaces.clear();
+        try {
+            JSONArray arr = json.getJSONArray("results");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject o = arr.getJSONObject(i);
+                String pid     = o.optString("place_id", "");
+                String pname   = o.optString("name",     "Unnamed");
+                String pavn    = o.optString("vicinity","No address");
+                String ref = null;
+                JSONArray photos = o.optJSONArray("photos");
+                if (photos != null && photos.length() > 0)  {
+                    ref = photos.optJSONObject(0).optString("photo_reference", null);
+                }
+                NearbyPlace np = new NearbyPlace(pid, pname, pavn, ref);
+                nearbyPlaces.add(np);
+            }
+        } catch (JSONException e) {
+            Log.e("Places", "parseNearbyJson error", e);
+        }
+        httpAdapter.notifyDataSetChanged();
+        swipe.setRefreshing(false);
     }
 }
