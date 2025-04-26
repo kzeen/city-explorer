@@ -17,7 +17,6 @@ public class SimpleStringAdapter extends RecyclerView.Adapter<SimpleStringAdapte
         this.data = data;
     }
 
-    /** Holds each row’s views */
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView label;
         ViewHolder(@NonNull View itemView) {
@@ -28,7 +27,6 @@ public class SimpleStringAdapter extends RecyclerView.Adapter<SimpleStringAdapte
 
     @NonNull @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Android’s built-in 1-line layout is fine for a demo
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(android.R.layout.simple_list_item_1, parent, false);
         return new ViewHolder(v);

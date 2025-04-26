@@ -15,7 +15,7 @@ public class FavoritesActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inflateLayout(R.layout.activity_favorites);   // see XML below
+        inflateLayout(R.layout.activity_favorites);
 
         RecyclerView rv = findViewById(R.id.favorites_recycler);
         rv.setLayoutManager(new LinearLayoutManager(this));

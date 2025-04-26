@@ -27,7 +27,7 @@
             android:name=".FavoritesActivity"
             android:exported="false" />
         <activity
-            android:name=".PlacesActivity"
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".BaseActivity"

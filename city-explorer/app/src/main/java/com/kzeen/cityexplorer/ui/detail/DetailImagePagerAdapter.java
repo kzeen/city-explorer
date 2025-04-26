@@ -40,7 +40,6 @@ public class DetailImagePagerAdapter
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         PhotoMetadata meta = items.get(position);
 
-        // Fetch bitmap for this photo metadata
         FetchPhotoRequest req = FetchPhotoRequest.builder(meta)
                 .setMaxWidth(1200)
                 .setMaxHeight(800)
@@ -60,14 +59,11 @@ public class DetailImagePagerAdapter
         return items.size();
     }
 
-    /** Replace current list and refresh. */
     public void submitList(@NonNull List<PhotoMetadata> newItems) {
         items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
     }
-
-    /* ------------ ViewHolder ------------ */
 
     static class PhotoViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView;

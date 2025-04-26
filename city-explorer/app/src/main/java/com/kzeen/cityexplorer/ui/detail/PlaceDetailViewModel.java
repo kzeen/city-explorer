@@ -15,7 +15,6 @@ import java.util.List;
 
 public class PlaceDetailViewModel extends ViewModel {
 
-    /* ---------- LiveData ---------- */
 
     private final MutableLiveData<Place> placeLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<PhotoMetadata>> photosLiveData = new MutableLiveData<>();
@@ -25,16 +24,7 @@ public class PlaceDetailViewModel extends ViewModel {
     public LiveData<List<PhotoMetadata>> getPhotos() { return photosLiveData; }
     public LiveData<Throwable> getError()    { return errorLiveData;   }
 
-    /* ---------- Public API ---------- */
-
-    /**
-     * Asynchronously fetches a {@link Place} by ID and updates LiveData.
-     *
-     * @param placeId      ID returned earlier by the Places SDK
-     * @param placesClient Shared {@link PlacesClient} instance
-     */
     public void loadPlace(@NonNull String placeId, @NonNull PlacesClient placesClient) {
-        // If already loaded, skip duplicate network call
         if (placeLiveData.getValue() != null) return;
 
         List<Place.Field> fields = Arrays.asList(

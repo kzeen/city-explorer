@@ -44,21 +44,17 @@ public class PlaceDetailActivity extends AppCompatActivity {
         binding = ActivityPlaceDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Toolbar
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Init Places SDK
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
         }
         placesClient = Places.createClient(this);
 
-        // Photo ViewPager
         imageAdapter = new DetailImagePagerAdapter(placesClient);
         binding.viewPagerPhotos.setAdapter(imageAdapter);
 
-        // Load place via ViewModel
         String placeId = getIntent().getStringExtra(EXTRA_PLACE_ID);
 
         viewModel = new ViewModelProvider(this).get(PlaceDetailViewModel.class);
@@ -69,7 +65,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         if (placeId != null) {
             viewModel.loadPlace(placeId, placesClient);
         } else {
-            finish(); // nothing to show
+            finish();
         }
     }
 
@@ -84,8 +80,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         List<PhotoMetadata> photos = place.getPhotoMetadatas();
         if (photos != null && !photos.isEmpty()) {
-            loadPhoto(photos.get(0), binding.imageHero);          // hero
-            if (photos.size() > 1) {                              // carousel
+            loadPhoto(photos.get(0), binding.imageHero);
+            if (photos.size() > 1) {
                 imageAdapter.submitList(new ArrayList<>(photos.subList(1, photos.size())));
             }
         } else {
@@ -96,8 +92,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
         setupWebsiteButton(place);
         setupShareButton(place);
     }
-
-    /* ---------- Buttons ---------- */
 
     private void setupMapButton(Place place) {
         LatLng ll = place.getLatLng();
@@ -133,8 +127,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
         });
     }
 
-    /* ---------- Photo helpers ---------- */
-
     private void loadPhoto(PhotoMetadata meta, ImageView target) {
         FetchPhotoRequest req = FetchPhotoRequest.builder(meta)
                 .setMaxWidth(1600).setMaxHeight(900).build();
@@ -146,8 +138,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
                         .into(target))
                 .addOnFailureListener(Throwable::printStackTrace);
     }
-
-    /* ---------- Toolbar ---------- */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

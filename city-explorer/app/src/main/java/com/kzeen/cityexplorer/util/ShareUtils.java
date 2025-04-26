@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public final class ShareUtils {
 
     private ShareUtils() {
-        // no‑instantiation
+
     }
 
     private static final String MAPS_QUERY_TEMPLATE =
@@ -36,7 +36,7 @@ public final class ShareUtils {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        return Intent.createChooser(i, null);  // system decides best title
+        return Intent.createChooser(i, null);
     }
     @NonNull
     public static Intent createMapIntent(@NonNull String name,
@@ -46,7 +46,7 @@ public final class ShareUtils {
         Uri geo = Uri.parse("geo:" + lat + "," + lng + "?q=" + Uri.encode(name));
 
         Intent i = new Intent(Intent.ACTION_VIEW, geo);
-        i.setPackage("com.google.android.apps.maps");   // prefer Google Maps
+        i.setPackage("com.google.android.apps.maps");
         return i;
     }
 }

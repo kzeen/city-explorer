@@ -7,22 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlacesActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity {
 
-    @Override protected int getNavItemId() { return R.id.nav_places; }
-    @Override protected int getToolbarTitleRes() { return R.string.places; }
+    @Override protected int getNavItemId() { return R.id.nav_search; }
+    @Override protected int getToolbarTitleRes() { return R.string.search; }
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inflateLayout(R.layout.activity_places);   // see XML below
+        inflateLayout(R.layout.activity_search);
 
-        RecyclerView rv = findViewById(R.id.places_recycler);
+        RecyclerView rv = findViewById(R.id.search_recycler);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new SimpleStringAdapter(mockData()));
     }
 
     private List<String> mockData() {
-        return Arrays.asList("Places 1", "Item 2", "Item 3");
+        return Arrays.asList("Search 1", "Item 2", "Item 3");
     }
 }

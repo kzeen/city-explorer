@@ -15,7 +15,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inflateLayout(R.layout.activity_settings);   // see XML below
+        inflateLayout(R.layout.activity_settings);
 
         RecyclerView rv = findViewById(R.id.settings_recycler);
         rv.setLayoutManager(new LinearLayoutManager(this));

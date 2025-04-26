@@ -45,14 +45,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         h.binding.rowTitle.setText(p.getName());
         h.binding.rowSubtitle.setText(p.getAddress());
 
-        // Open detail page on tap
         h.itemView.setOnClickListener(v -> {
             Intent i = new Intent(v.getContext(), PlaceDetailActivity.class);
             i.putExtra(PlaceDetailActivity.EXTRA_PLACE_ID, p.getId());
             v.getContext().startActivity(i);
         });
 
-        // Load photo if available
         List<PhotoMetadata> meta = p.getPhotoMetadatas();
         if (meta != null && !meta.isEmpty()) {
             FetchPhotoRequest req = FetchPhotoRequest.builder(meta.get(0)).build();
