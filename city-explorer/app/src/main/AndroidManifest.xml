@@ -24,7 +24,7 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".FavoritesActivity"
+            android:name=".RecentsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.search.SearchActivity"
