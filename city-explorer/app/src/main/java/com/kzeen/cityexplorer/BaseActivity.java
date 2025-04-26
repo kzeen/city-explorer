@@ -43,8 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 intent = new Intent(this, SearchActivity.class);
             } else if (item.getItemId() == R.id.nav_recents) {
                 intent = new Intent(this, RecentsActivity.class);
-            } else if (item.getItemId() == R.id.nav_settings) {
-                intent = new Intent(this, SettingsActivity.class);
             } else {
                 throw new IllegalArgumentException("Unknown navigation item");
             }

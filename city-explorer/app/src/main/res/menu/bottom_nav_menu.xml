@@ -12,8 +12,4 @@
     android:id="@+id/nav_recents"
     android:title="@string/recents"
     android:icon="@drawable/ic_recents" />
-<item
-    android:id="@+id/nav_settings"
-    android:title="@string/settings"
-    android:icon="@drawable/ic_settings" />
 </menu>
