@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.placedetail;
+package com.kzeen.cityexplorer.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kzeen.cityexplorer.models.PlaceDetailView;
+import com.kzeen.cityexplorer.ui.adapters.DetailImagePagerAdapter;
 import com.kzeen.cityexplorer.util.ShareUtils;
 import com.kzeen.cityexplorer.util.RecentsManager;
 

@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.placedetail;
+package com.kzeen.cityexplorer.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +17,7 @@ import com.kzeen.cityexplorer.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailImagePagerAdapter
-        extends RecyclerView.Adapter<DetailImagePagerAdapter.PhotoViewHolder> {
-
+public class DetailImagePagerAdapter extends RecyclerView.Adapter<DetailImagePagerAdapter.PhotoViewHolder> {
     private final PlacesClient placesClient;
     private final List<PhotoMetadata> items = new ArrayList<>();
 

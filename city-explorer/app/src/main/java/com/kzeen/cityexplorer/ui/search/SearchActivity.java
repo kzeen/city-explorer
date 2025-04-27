@@ -20,7 +20,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.kzeen.cityexplorer.ui.BaseActivity;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivitySearchBinding;
-import com.kzeen.cityexplorer.ui.placedetail.PlaceDetailActivity;
+import com.kzeen.cityexplorer.ui.PlaceDetailActivity;
 import com.kzeen.cityexplorer.ui.adapters.PlaceAdapter;
 
 import java.util.ArrayList;

@@ -14,7 +14,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import com.kzeen.cityexplorer.ui.placedetail.PlaceDetailActivity;
+import com.kzeen.cityexplorer.ui.PlaceDetailActivity;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

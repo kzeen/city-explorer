@@ -13,7 +13,7 @@ import com.kzeen.cityexplorer.BuildConfig;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.RowPlaceBinding;
 import com.kzeen.cityexplorer.models.NearbyPlace;
-import com.kzeen.cityexplorer.ui.placedetail.PlaceDetailActivity;
+import com.kzeen.cityexplorer.ui.PlaceDetailActivity;
 
 import java.util.List;
 import java.util.Locale;
