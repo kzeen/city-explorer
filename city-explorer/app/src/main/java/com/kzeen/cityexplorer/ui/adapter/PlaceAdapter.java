@@ -1,6 +1,7 @@
 package com.kzeen.cityexplorer.ui.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
 
@@ -48,6 +49,15 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         Place p = data.get(pos);
         h.binding.rowTitle.setText(p.getName());
         h.binding.rowSubtitle.setText(p.getAddress());
+
+        Float rating = p.getRating() == null ? 0f : p.getRating().floatValue();
+
+        if (rating > 0f) {
+            h.binding.rowRating.setVisibility(View.VISIBLE);
+            h.binding.rowRating.setRating(rating);
+        } else {
+            h.binding.rowRating.setVisibility(View.GONE);
+        }
 
         h.itemView.setOnClickListener(v -> {
             Intent i = new Intent(v.getContext(), PlaceDetailActivity.class);

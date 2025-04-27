@@ -2,7 +2,9 @@ package com.kzeen.cityexplorer.ui.adapter;
 
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -45,6 +47,15 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
         NearbyPlace np = data.get(pos);
         h.binding.rowTitle.setText(   np.getName()   );
         h.binding.rowSubtitle.setText(np.getAddress());
+
+        Float r = np.getRating() == null ? 0f : np.getRating();
+
+        if (r > 0f) {
+            h.binding.rowRating.setVisibility(View.VISIBLE);
+            h.binding.rowRating.setRating(r);
+        } else {
+            h.binding.rowRating.setVisibility(View.GONE);
+        }
 
         String ref = np.getPhotoRef();
         if (ref != null) {

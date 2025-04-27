@@ -138,7 +138,8 @@ public class HomeActivity extends BaseActivity {
                     Place.Field.NAME,
                     Place.Field.ADDRESS,
                     Place.Field.PHOTO_METADATAS,
-                    Place.Field.LAT_LNG
+                    Place.Field.LAT_LNG,
+                    Place.Field.RATING
             );
             FindCurrentPlaceRequest req = FindCurrentPlaceRequest.newInstance(fields);
             @SuppressLint("MissingPermission")
@@ -213,7 +214,11 @@ public class HomeActivity extends BaseActivity {
                 if (photos != null && photos.length() > 0)  {
                     ref = photos.optJSONObject(0).optString("photo_reference", null);
                 }
-                NearbyPlace np = new NearbyPlace(pid, pname, pavn, ref);
+                Float rating = null;
+                if (o.has("rating") && !o.isNull("rating")) {
+                    rating = (float) o.optDouble("rating", 0.0);
+                }
+                NearbyPlace np = new NearbyPlace(pid, pname, pavn, ref, rating);
                 nearbyPlaces.add(np);
             }
         } catch (JSONException e) {

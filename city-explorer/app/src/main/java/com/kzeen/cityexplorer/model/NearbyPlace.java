@@ -10,16 +10,19 @@ public class NearbyPlace implements Parcelable {
     private final @NonNull String id;
     private final @NonNull String name;
     private final @NonNull String address;
-    private final String photoRef;
+    private final @Nullable String photoRef;
+    private final @Nullable Float rating;
 
     public NearbyPlace(@NonNull String id,
                        @NonNull String name,
                        @NonNull String address,
-                       @Nullable String photoRef) {
+                       @Nullable String photoRef,
+                       @Nullable Float rating) {
         this.id      = id;
         this.name    = name;
         this.address = address;
         this.photoRef = photoRef;
+        this.rating = rating;
     }
 
     protected NearbyPlace(Parcel in) {
@@ -27,6 +30,7 @@ public class NearbyPlace implements Parcelable {
         name    = in.readString();
         address = in.readString();
         photoRef = in.readString();
+        rating  = (Float) in.readValue(Float.class.getClassLoader());
     }
 
     public static final Creator<NearbyPlace> CREATOR = new Creator<>() {
@@ -38,6 +42,7 @@ public class NearbyPlace implements Parcelable {
     @NonNull public String getName()    { return name; }
     @NonNull public String getAddress() { return address; }
     @Nullable public String getPhotoRef() { return photoRef; }
+    @Nullable public Float getRating()   { return rating; }
 
     @Override public int describeContents() { return 0; }
 
@@ -47,5 +52,6 @@ public class NearbyPlace implements Parcelable {
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(photoRef);
+        dest.writeValue(rating);
     }
 }
