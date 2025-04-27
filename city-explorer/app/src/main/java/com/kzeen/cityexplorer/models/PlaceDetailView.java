@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.placedetail;
+package com.kzeen.cityexplorer.models;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -13,9 +13,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlaceDetailViewModel extends ViewModel {
-
-
+public class PlaceDetailView extends ViewModel {
     private final MutableLiveData<Place> placeLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<PhotoMetadata>> photosLiveData = new MutableLiveData<>();
     private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
@@ -28,8 +26,11 @@ public class PlaceDetailViewModel extends ViewModel {
         if (placeLiveData.getValue() != null) return;
 
         List<Place.Field> fields = Arrays.asList(
-                Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG,
-                Place.Field.PHONE_NUMBER, Place.Field.WEBSITE_URI, Place.Field.RATING,
+                Place.Field.ID, Place.Field.NAME,
+                Place.Field.ADDRESS, Place.Field.LAT_LNG,
+                Place.Field.PHONE_NUMBER,
+                Place.Field.WEBSITE_URI,
+                Place.Field.RATING,
                 Place.Field.PHOTO_METADATAS);
 
         FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, fields).build();

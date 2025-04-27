@@ -28,7 +28,7 @@ import com.kzeen.cityexplorer.BuildConfig;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivityHomeBinding;
 import com.google.android.libraries.places.api.model.Place;
-import com.kzeen.cityexplorer.model.NearbyPlace;
+import com.kzeen.cityexplorer.models.NearbyPlace;
 import com.kzeen.cityexplorer.network.VolleySingleton;
 import com.kzeen.cityexplorer.ui.adapters.NearbyPlaceAdapter;
 import com.kzeen.cityexplorer.ui.adapters.PlaceAdapter;

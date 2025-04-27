@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.model;
+package com.kzeen.cityexplorer.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

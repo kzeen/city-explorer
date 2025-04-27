@@ -25,6 +25,8 @@ import com.kzeen.cityexplorer.databinding.ActivityPlaceDetailBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.kzeen.cityexplorer.models.PlaceDetailView;
 import com.kzeen.cityexplorer.util.ShareUtils;
 import com.kzeen.cityexplorer.util.RecentsManager;
 
@@ -60,7 +62,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
             RecentsManager.addRecent(this, placeId);
         }
 
-        PlaceDetailViewModel viewModel = new ViewModelProvider(this).get(PlaceDetailViewModel.class);
+        PlaceDetailView viewModel = new ViewModelProvider(this).get(PlaceDetailView.class);
 
         viewModel.getPlace().observe(this, this::bindPlace);
         viewModel.getError().observe(this, Throwable::printStackTrace);
