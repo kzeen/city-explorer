@@ -35,6 +35,9 @@
                 style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold_compat"
+                android:textStyle="bold"
+                android:textSize="@dimen/large_title"
                 android:textColor="?attr/colorOnSurface"/>
 
             <RatingBar
@@ -56,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="@dimen/medium_title"
                 android:maxLines="2"
                 android:ellipsize="end"/>
         </LinearLayout>

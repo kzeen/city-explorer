@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_location"
                 android:drawablePadding="8dp"
+                android:textSize="@dimen/small"
                 tools:text="1600 Amphitheatre Pkwy, Mountain View, CA" />
 
             <TextView
@@ -71,6 +72,7 @@
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="@dimen/small"
                 tools:text="+1 234‑567‑8900" />
 
             <TextView
@@ -81,6 +83,7 @@
                 android:drawableStart="@drawable/ic_star"
                 android:drawablePadding="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="@dimen/small"
                 tools:text="4.5" />
 
             <LinearLayout

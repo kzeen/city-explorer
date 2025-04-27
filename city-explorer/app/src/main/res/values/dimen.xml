@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="title">34sp</dimen>
+    <dimen name="large_title">28sp</dimen>
+    <dimen name="medium_title">18sp</dimen>
+    <dimen name="small">16sp</dimen>
 </resources>
