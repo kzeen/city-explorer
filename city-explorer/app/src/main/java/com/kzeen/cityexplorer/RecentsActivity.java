@@ -53,7 +53,8 @@ public class RecentsActivity extends BaseActivity {
                             Place.Field.ID,
                             Place.Field.NAME,
                             Place.Field.ADDRESS,
-                            Place.Field.PHOTO_METADATAS))
+                            Place.Field.PHOTO_METADATAS,
+                            Place.Field.RATING))
                     .build();
 
             placesClient.fetchPlace(req)

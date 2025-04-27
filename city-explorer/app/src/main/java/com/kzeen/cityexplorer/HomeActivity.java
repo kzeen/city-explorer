@@ -216,8 +216,10 @@ public class HomeActivity extends BaseActivity {
                     ref = photos.optJSONObject(0).optString("photo_reference", null);
                 }
                 Float rating = null;
+                Log.d("RATINGS", "rating = " + rating);
                 if (o.has("rating") && !o.isNull("rating")) {
                     rating = (float) o.optDouble("rating", 0.0);
+                    Log.d("RATINGS", "rating = " + rating);
                 }
                 NearbyPlace np = new NearbyPlace(pid, pname, pavn, ref, rating);
                 nearbyPlaces.add(np);
