@@ -120,6 +120,13 @@
                     android:text="@string/share" />
             </LinearLayout>
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map_fragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="16dp"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

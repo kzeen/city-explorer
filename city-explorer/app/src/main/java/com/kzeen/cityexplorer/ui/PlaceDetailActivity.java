@@ -13,7 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
@@ -31,13 +36,16 @@ import com.kzeen.cityexplorer.ui.adapters.DetailImagePagerAdapter;
 import com.kzeen.cityexplorer.util.ShareUtils;
 import com.kzeen.cityexplorer.util.RecentsManager;
 
-public class PlaceDetailActivity extends AppCompatActivity {
+public class PlaceDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final String EXTRA_PLACE_ID = "extra_place_id";
 
     private ActivityPlaceDetailBinding binding;
     private PlacesClient placesClient;
     private DetailImagePagerAdapter imageAdapter;
+    private GoogleMap map;
+    private Place currentPlace;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
     }
 
     private void bindPlace(@NonNull Place place) {
+        this.currentPlace = place;
+        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        mapFrag.getMapAsync(this);
         binding.collapsingToolbar.setTitle(place.getName());
 
         binding.textAddress.setText(place.getAddress());
@@ -165,5 +176,18 @@ public class PlaceDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.map = googleMap;
+        LatLng ll = currentPlace.getLatLng();
+
+        if (ll != null) {
+            map.addMarker(new MarkerOptions()
+                    .position(ll)
+                    .title(currentPlace.getName()));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ll, 15f));
+        }
     }
 }
