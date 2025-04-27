@@ -24,19 +24,19 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".RecentsActivity"
+            android:name=".ui.RecentsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".BaseActivity"
+            android:name=".ui.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

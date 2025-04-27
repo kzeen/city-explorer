@@ -1,14 +1,13 @@
-package com.kzeen.cityexplorer;
+package com.kzeen.cityexplorer.ui;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
+import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivityRecentsBinding;
 import com.kzeen.cityexplorer.ui.adapter.PlaceAdapter;
 import com.kzeen.cityexplorer.util.RecentsManager;

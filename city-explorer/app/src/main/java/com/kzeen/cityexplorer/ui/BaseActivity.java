@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer;
+package com.kzeen.cityexplorer.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kzeen.cityexplorer.BuildConfig;
+import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.ui.search.SearchActivity;
 
 import java.util.Objects;

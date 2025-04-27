@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.RowPlaceBinding;
 
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;

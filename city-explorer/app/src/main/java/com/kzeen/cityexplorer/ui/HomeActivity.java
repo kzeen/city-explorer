@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer;
+package com.kzeen.cityexplorer.ui;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -12,7 +12,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
@@ -25,10 +24,10 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
+import com.kzeen.cityexplorer.BuildConfig;
+import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivityHomeBinding;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.Place.Type;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.kzeen.cityexplorer.model.NearbyPlace;
 import com.kzeen.cityexplorer.network.VolleySingleton;
 import com.kzeen.cityexplorer.ui.adapter.NearbyPlaceAdapter;

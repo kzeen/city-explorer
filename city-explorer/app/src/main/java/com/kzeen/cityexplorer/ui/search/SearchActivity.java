@@ -13,17 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.kzeen.cityexplorer.BaseActivity;
-import com.kzeen.cityexplorer.BuildConfig;
+import com.kzeen.cityexplorer.ui.BaseActivity;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivitySearchBinding;
-import com.kzeen.cityexplorer.repository.PlacesRepository;
 import com.kzeen.cityexplorer.ui.detail.PlaceDetailActivity;
 import com.kzeen.cityexplorer.ui.adapter.PlaceAdapter;
 
