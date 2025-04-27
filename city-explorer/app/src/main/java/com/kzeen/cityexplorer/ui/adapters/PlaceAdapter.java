@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.adapter;
+package com.kzeen.cityexplorer.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import com.kzeen.cityexplorer.ui.detail.PlaceDetailActivity;
+import com.kzeen.cityexplorer.ui.placedetail.PlaceDetailActivity;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

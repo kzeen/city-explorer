@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.detail;
+package com.kzeen.cityexplorer.ui.placedetail;
 
 import android.content.Intent;
 import android.net.Uri;

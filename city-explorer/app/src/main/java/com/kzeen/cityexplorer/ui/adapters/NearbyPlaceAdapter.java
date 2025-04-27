@@ -1,4 +1,4 @@
-package com.kzeen.cityexplorer.ui.adapter;
+package com.kzeen.cityexplorer.ui.adapters;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import com.kzeen.cityexplorer.BuildConfig;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.RowPlaceBinding;
 import com.kzeen.cityexplorer.model.NearbyPlace;
-import com.kzeen.cityexplorer.ui.detail.PlaceDetailActivity;
+import com.kzeen.cityexplorer.ui.placedetail.PlaceDetailActivity;
 
 import java.util.List;
 import java.util.Locale;

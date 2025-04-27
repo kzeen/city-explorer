@@ -9,7 +9,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.model.Place;
 import com.kzeen.cityexplorer.R;
 import com.kzeen.cityexplorer.databinding.ActivityRecentsBinding;
-import com.kzeen.cityexplorer.ui.adapter.PlaceAdapter;
+import com.kzeen.cityexplorer.ui.adapters.PlaceAdapter;
 import com.kzeen.cityexplorer.util.RecentsManager;
 
 import java.util.ArrayList;

@@ -30,8 +30,8 @@ import com.kzeen.cityexplorer.databinding.ActivityHomeBinding;
 import com.google.android.libraries.places.api.model.Place;
 import com.kzeen.cityexplorer.model.NearbyPlace;
 import com.kzeen.cityexplorer.network.VolleySingleton;
-import com.kzeen.cityexplorer.ui.adapter.NearbyPlaceAdapter;
-import com.kzeen.cityexplorer.ui.adapter.PlaceAdapter;
+import com.kzeen.cityexplorer.ui.adapters.NearbyPlaceAdapter;
+import com.kzeen.cityexplorer.ui.adapters.PlaceAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

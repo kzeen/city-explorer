@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.detail.PlaceDetailActivity"
+            android:name=".ui.placedetail.PlaceDetailActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"
