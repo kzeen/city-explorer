@@ -146,13 +146,14 @@ public class HomeActivity extends BaseActivity {
             Task<FindCurrentPlaceResponse> task = placesClient.findCurrentPlace(req);
             task.addOnSuccessListener(r -> {
                 for (PlaceLikelihood pl : r.getPlaceLikelihoods()) {
-                    Place sdkPlace = pl.getPlace();
-                    if (sdkPlace.getAddress() != null) {
-                        places.add(pl.getPlace());
-                    }
+                    Place p = pl.getPlace();
+                    if (p.getAddress() == null) continue;
+                    if (p.getPhotoMetadatas() == null || p.getPhotoMetadatas().isEmpty()) continue;
+
+                    places.add(p);
                 }
-                if (places.size() > 50)
-                    places.subList(50, places.size()).clear();
+                if (places.size() > 20)
+                    places.subList(20, places.size()).clear();
                 adapter.notifyDataSetChanged();
                 swipe.setRefreshing(false);
             }).addOnFailureListener(e -> {
