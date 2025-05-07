@@ -21,9 +21,6 @@
             android:name=".ui.PlaceDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.RecentsActivity"
             android:exported="false" />
         <activity
