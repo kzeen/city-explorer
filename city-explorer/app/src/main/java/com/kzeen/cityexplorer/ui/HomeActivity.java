@@ -225,7 +225,7 @@ public class HomeActivity extends BaseActivity {
         } catch (JSONException e) {
             Log.e("Places", "parseNearbyJson error", e);
         }
-        
+
         httpAdapter.notifyDataSetChanged();
         swipe.setRefreshing(false);
     }

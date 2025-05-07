@@ -7,21 +7,13 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 public final class ShareUtils {
-
     private ShareUtils() {
-
     }
 
-    private static final String MAPS_QUERY_TEMPLATE =
-            "https://www.google.com/maps/search/?api=1&query=%f,%f";
+    private static final String MAPS_QUERY_TEMPLATE = "https://www.google.com/maps/search/?api=1&query=%f,%f";
 
     @NonNull
-    public static Intent createShareIntent(@NonNull Context ctx,
-                                           @NonNull String name,
-                                           @Nullable String addr,
-                                           @Nullable Double lat,
-                                           @Nullable Double lng) {
-
+    public static Intent createShareIntent(@NonNull Context ctx, @NonNull String name, @Nullable String addr, @Nullable Double lat, @Nullable Double lng) {
         String mapsUrl = (lat != null && lng != null)
                 ? String.format(MAPS_QUERY_TEMPLATE, lat, lng)
                 : "https://www.google.com/maps/search/?q=" + Uri.encode(name);
@@ -39,10 +31,7 @@ public final class ShareUtils {
         return Intent.createChooser(i, null);
     }
     @NonNull
-    public static Intent createMapIntent(@NonNull String name,
-                                         @NonNull Double lat,
-                                         @NonNull Double lng) {
-
+    public static Intent createMapIntent(@NonNull String name, @NonNull Double lat, @NonNull Double lng) {
         Uri geo = Uri.parse("geo:" + lat + "," + lng + "?q=" + Uri.encode(name));
 
         Intent i = new Intent(Intent.ACTION_VIEW, geo);
