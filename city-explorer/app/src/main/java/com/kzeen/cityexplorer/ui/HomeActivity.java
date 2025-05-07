@@ -176,10 +176,10 @@ public class HomeActivity extends BaseActivity {
     private void fetchNearbyByType(String category) {
         String typeParam = "";
         switch (category) {
-            case "Food":     typeParam = "restaurant";    break;
-            case "Parks":    typeParam = "park";          break;
+            case "Food": typeParam = "restaurant"; break;
+            case "Parks": typeParam = "park"; break;
             case "Shopping": typeParam = "shopping_mall"; break;
-            case "Parking":  typeParam = "parking";       break;
+            case "Parking": typeParam = "parking"; break;
         }
         String url = String.format(Locale.US,
                 "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
@@ -192,11 +192,9 @@ public class HomeActivity extends BaseActivity {
                 this::parseNearbyJson,
                 error -> {
                     swipe.setRefreshing(false);
-                    Snackbar.make(swipe, "Nearby search failed: " + error.getMessage(),
-                                    Snackbar.LENGTH_LONG)
+                    Snackbar.make(swipe, "Nearby search failed: " + error.getMessage(), Snackbar.LENGTH_LONG)
                             .setAction("RETRY", v -> loadPlaces())
                             .show();
-                    Log.e("Places", "NearbySearch error", error);
                 });
         VolleySingleton.getInstance(this).addToRequestQueue(req);
     }
@@ -206,26 +204,28 @@ public class HomeActivity extends BaseActivity {
             JSONArray arr = json.getJSONArray("results");
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject o = arr.getJSONObject(i);
-                String pid     = o.optString("place_id", "");
-                String pname   = o.optString("name",     "Unnamed");
-                String pavn    = o.optString("vicinity","No address");
+                String pid = o.optString("place_id", "");
+                String pname = o.optString("name",     "Unnamed");
+                String pavn = o.optString("vicinity","No address");
                 String ref = null;
+
                 JSONArray photos = o.optJSONArray("photos");
                 if (photos != null && photos.length() > 0)  {
                     ref = photos.optJSONObject(0).optString("photo_reference", null);
                 }
+
                 Float rating = null;
-                Log.d("RATINGS", "rating = " + rating);
                 if (o.has("rating") && !o.isNull("rating")) {
                     rating = (float) o.optDouble("rating", 0.0);
-                    Log.d("RATINGS", "rating = " + rating);
                 }
+
                 NearbyPlace np = new NearbyPlace(pid, pname, pavn, ref, rating);
                 nearbyPlaces.add(np);
             }
         } catch (JSONException e) {
             Log.e("Places", "parseNearbyJson error", e);
         }
+        
         httpAdapter.notifyDataSetChanged();
         swipe.setRefreshing(false);
     }
