@@ -18,9 +18,9 @@ public class PlaceDetailView extends ViewModel {
     private final MutableLiveData<List<PhotoMetadata>> photosLiveData = new MutableLiveData<>();
     private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
 
-    public LiveData<Place> getPlace()        { return placeLiveData;   }
+    public LiveData<Place> getPlace() { return placeLiveData;   }
     public LiveData<List<PhotoMetadata>> getPhotos() { return photosLiveData; }
-    public LiveData<Throwable> getError()    { return errorLiveData;   }
+    public LiveData<Throwable> getError() { return errorLiveData;   }
 
     public void loadPlace(@NonNull String placeId, @NonNull PlacesClient placesClient) {
         if (placeLiveData.getValue() != null) return;

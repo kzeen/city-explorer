@@ -13,24 +13,20 @@ public class NearbyPlace implements Parcelable {
     private final @Nullable String photoRef;
     private final @Nullable Float rating;
 
-    public NearbyPlace(@NonNull String id,
-                       @NonNull String name,
-                       @NonNull String address,
-                       @Nullable String photoRef,
-                       @Nullable Float rating) {
-        this.id      = id;
-        this.name    = name;
+    public NearbyPlace(@NonNull String id, @NonNull String name, @NonNull String address,@Nullable String photoRef, @Nullable Float rating) {
+        this.id = id;
+        this.name = name;
         this.address = address;
         this.photoRef = photoRef;
         this.rating = rating;
     }
 
     protected NearbyPlace(Parcel in) {
-        id      = in.readString();
-        name    = in.readString();
+        id = in.readString();
+        name = in.readString();
         address = in.readString();
         photoRef = in.readString();
-        rating  = (Float) in.readValue(Float.class.getClassLoader());
+        rating = (Float) in.readValue(Float.class.getClassLoader());
     }
 
     public static final Creator<NearbyPlace> CREATOR = new Creator<>() {
